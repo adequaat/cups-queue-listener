@@ -1,0 +1,27 @@
+{
+  "name": "cups-queue-listener",
+  "version": "1.0.0",
+  "description": "Enables node scripts to listen to CUPS specific events, like succesfull prints, errored prints and queue length.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "ava"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adequaat/cups-queue-listener.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adequaat/cups-queue-listener/issues"
+  },
+  "homepage": "https://github.com/adequaat/cups-queue-listener#readme",
+  "dependencies": {
+    "cups-config-reader": "^1.0.0"
+  },
+  "devDependencies": {
+    "ava": "^5.0.1"
+  }
+}
