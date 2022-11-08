@@ -49,6 +49,7 @@ export default function (eventEmitter) {
     }
 
     eventEmitter.emit("print-success", data);
+    eventEmitter.emit(`print-success-${destination}`, { id });
 
     const registry = registries[destination];
     registry?.set(id, PRINTED);
