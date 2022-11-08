@@ -18,9 +18,13 @@ export default class LogListener {
 
     // to skip the first output from tail received by stdout we bind after the first 'data' event has fired
     this.#childProcess.stdout.once("data", () => {
-      this.#childProcess.stdout.on("data", this.#parseAndemit.bind(this));
+      this.#childProcess.stdout.on("data", (data) => {
+        this.#parseAndemit(data);
+      });
     });
-    this.#childProcess.stderr.on("data", this.#parseAndemit);
+    this.#childProcess.stderr.on("data", (data) => {
+      this.#parseAndemit(data);
+    });
 
     this.#childProcess.on("error", (err) => {
       console.error(err);
