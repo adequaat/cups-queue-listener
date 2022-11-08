@@ -1,6 +1,6 @@
 {
   "name": "cups-queue-listener",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Enables node scripts to listen to CUPS specific events, like succesfull prints, errored prints and queue length.",
   "main": "index.js",
   "type": "module",
