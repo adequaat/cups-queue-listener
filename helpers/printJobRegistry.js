@@ -16,7 +16,7 @@ export default function (eventEmitter) {
     'destination' property (the destination the job was started on) to help the
     listeners tie everything together and emit sensible events.
   */
-  eventEmitter.on("print-started", ({ id, destination }) => {
+  eventEmitter.on("print-queued", ({ id, destination }) => {
     if (!(destination in registries)) {
       registries[destination] = new Map();
     }
