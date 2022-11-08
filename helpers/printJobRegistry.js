@@ -66,11 +66,6 @@ export default function (eventEmitter) {
       }
     });
 
-    if (queued < 5) {
-      eventEmitter.emit("queue-almost-empty", { destination });
-      eventEmitter.emit(`queue-almost-empty-${destination}`);
-    }
-
     eventEmitter.emit("queue-update", {
       queue,
       queued,
@@ -83,5 +78,15 @@ export default function (eventEmitter) {
       queued,
       printed,
     });
+
+    if (queued < 5) {
+      eventEmitter.emit("queue-almost-empty", { destination });
+      eventEmitter.emit(`queue-almost-empty-${destination}`);
+    }
+
+    if (printed === queue) {
+      eventEmitter.emit("all-printed", { destination });
+      eventEmitter.emit(`all-printed-${destination}`);
+    }
   });
 }
