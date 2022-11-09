@@ -43,7 +43,6 @@ queListener
 
 // do some print action
 const { id, destination } = print('some-pdf-File.pdf');
-
 queueListener.emit('print-queued', { id, destination });
 
 ```

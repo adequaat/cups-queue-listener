@@ -3,6 +3,17 @@ import parseErrorLogLine from "../helpers/parseErrorLogLine.js";
 
 test("should parse all properties and values from an error log line", (t) => {
   t.deepEqual(
+    parseErrorLogLine(`E [09/Nov/2022:12:16:26 +0100] [Job 7] No suitable destination host found by cups-browsed.
+`),
+    {
+      level: "error",
+      time: "09/Nov/2022:12:16:26 +0100",
+      id: "7",
+      message: "No suitable destination host found by cups-browsed",
+    }
+  );
+
+  t.deepEqual(
     parseErrorLogLine(
       "E [18/Mar/2022:09:00:47 +0100] [Job 34] Files have gone away."
     ),
@@ -90,7 +101,18 @@ test("should correctly identify all levels of messages", (t) => {
   });
 });
 
-test("should throw on bad input", (t) => {
-  t.throws(() => parseErrorLogLine("this will not match..."));
-  t.throws(() => parseErrorLogLine(""));
+test("should also gracefully handle unexpected input", (t) => {
+  t.deepEqual(parseErrorLogLine("this will not match..."), {
+    level: "warning",
+    time: undefined,
+    id: undefined,
+    message: "Non parsable error message received: this will not match...",
+  });
+
+  t.deepEqual(parseErrorLogLine(""), {
+    level: "warning",
+    time: undefined,
+    id: undefined,
+    message: "Non parsable error message received: ",
+  });
 });

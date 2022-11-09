@@ -12,11 +12,19 @@ const levels = {
   X: "emergency_error",
 };
 
-export default function parseErrorLogLine(logLine = '') {
-  const matches = logLine.match(regex);
+export default function parseErrorLogLine(logLine = "") {
+  let matches = logLine.trim().match(regex);
 
+  // to cater for parsing error_log lines for other events that print errors there's an escape hatch
   if (!matches) {
-    throw new Error("input_incorrect");
+    // eslint-disable-next-line no-sparse-arrays
+    matches = [
+      ,
+      "W",
+      ,
+      ,
+      `Non parsable error message received: ${logLine}`,
+    ];
   }
 
   const [, level, time, id, message] = matches;

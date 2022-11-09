@@ -11,7 +11,7 @@ export default function (eventEmitter) {
   alreadyCalled = true;
 
   /*
-    emit a 'print-started' event on the eventEmitter from outside with
+    emit a 'print-queued' event on the eventEmitter from outside with
     an id property (the job id returned from the print command) and a
     'destination' property (the destination the job was started on) to help the
     listeners tie everything together and emit sensible events.
@@ -26,9 +26,15 @@ export default function (eventEmitter) {
   });
 
   eventEmitter.on("print-errored", (data) => {
-    const { id, message, level } = data;
+    const { id, level } = data;
+
+    // in case of non parsable error_log line we just emit a generic error event
+    if (!id) {
+      eventEmitter.emit("unparsable-print-error", data);
+    }
+
     // filter out non errors
-    if (level.includes("error")) {
+    if (level.includes("error") && id) {
       Object.entries(registries).forEach(([destination, registry]) => {
         if (registry.has(id)) {
           registry.set(id, "error");
